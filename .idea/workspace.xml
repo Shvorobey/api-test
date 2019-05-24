@@ -63,8 +63,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+            <state relative-caret-position="580">
+              <caret line="116" column="3" lean-forward="true" selection-start-line="116" selection-start-column="3" selection-end-line="116" selection-end-column="3" />
               <folding>
                 <element signature="e#7#43#0#PHP" expanded="true" />
               </folding>
@@ -308,7 +308,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558679954990</updated>
-      <workItem from="1558679956681" duration="9692000" />
+      <workItem from="1558679956681" duration="10928000" />
     </task>
     <task id="LOCAL-00001" summary="Инициализация Ларавел">
       <created>1558680235773</created>
@@ -345,11 +345,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558691351784</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Удален клиент по АПИ">
+      <created>1558693021595</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1558693021595</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9692000" />
+    <option name="totallyTimeSpent" value="10928000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -387,7 +394,8 @@
     <MESSAGE value="Выполнены миграции" />
     <MESSAGE value="Получены клиенты по АПИ" />
     <MESSAGE value="Создан клиент по АПИ" />
-    <option name="LAST_COMMIT_MESSAGE" value="Создан клиент по АПИ" />
+    <MESSAGE value="Удален клиент по АПИ" />
+    <option name="LAST_COMMIT_MESSAGE" value="Удален клиент по АПИ" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/cefed0e2-3370-46ef-9227-8da2a0f2a647/console.sql">
@@ -466,8 +474,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/api.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+        <state relative-caret-position="580">
+          <caret line="116" column="3" lean-forward="true" selection-start-line="116" selection-start-column="3" selection-end-line="116" selection-end-column="3" />
           <folding>
             <element signature="e#7#43#0#PHP" expanded="true" />
           </folding>
