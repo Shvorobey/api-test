@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Resources\PostResource;
+//use App\Http\Resources\PostResource;
 use Illuminate\Http\Request;
 
 /*
@@ -62,7 +62,6 @@ Route::delete('/clients/{id}', function (Request $request, $id) {
     } catch (\Exception $exception) {
         return response()->json(null, 404);
     }
-//    $client = \App\client::find($id);
     $client->delete();
     return response()->json(null, 204);
 });
@@ -101,10 +100,58 @@ Route::post('/projects', function (Request $request) {
     $rules = [
         'name' => 'required|max:150|min:2',
         'description' => 'required|max:35|min:2',
-        'statuses' => 'required|in:planned, running, on hold, finished, cancel',
+        'statuses' => 'required', \Illuminate\Validation\Rule::in( ['planned', 'running', 'on hold', 'finished', 'cancel']),
     ];
     /** @var \Illuminate\Support\Facades\Validator */
     $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules);
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 400);
+    }
+    $project = new \App\project();
+    $project->name = $request->post('name');
+    $project->description = $request->post('description');
+    $project->statuses = $request->post('statuses');
+    $project->save();
+    return response()->json($project, 201);
+});
+
+//Получение проекта
+Route::get('/projects/{id}', function ($id) {
+    return response()->json(\App\project::find($id), 200);
+});
+
+//Получение всех проектов
+Route::get('/projects', function () {
+    return response()->json(\App\project::all(), 200);
+});
+
+//Удаление проекта
+Route::delete('/projects/{id}', function (Request $request, $id) {
+    try {
+        $project = \App\project::findOrFail($id);
+    } catch (\Exception $exception) {
+        return response()->json(null, 404);
+    }
+    $project->delete();
+    return response()->json(null, 204);
+});
+
+
+//Обновление проекта
+Route::put('/projects/{id}', function (Request $request, $id) {
+    try {
+        $project = \App\project::findOrFail($id);
+    } catch (\Exception $exception) {
+        return response()->json(null, 404);
+    }
+    $rules = [
+        'name' => 'required|max:150|min:2',
+        'description' => 'required|max:255|min:2',
+        'statuses' => 'required', \Illuminate\Validation\Rule::in( ['planned', 'running', 'on hold', 'finished', 'cancel']),
+    ];
+    /** @var \Illuminate\Support\Facades\Validator */
+    $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules);
+
     if ($validator->fails()) {
         return response()->json($validator->errors(), 400);
     }
