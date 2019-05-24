@@ -22,7 +22,7 @@ Route::get('/', function () {
     return response()->json(['welcome'=>['Welcome to the test case! '], 'current time'=>date('Y-m-d h:m:s')], 200);
     });
 
-Route::post('/client', function (Request $request) {
+Route::post('/clients', function (Request $request) {
 
     $rules = [
 //        'id' => 'required|integer',
@@ -45,6 +45,10 @@ Route::post('/client', function (Request $request) {
     $client->password = $request->post('password');
     $client->save();
     return response()->json($client, 201);
+});
+
+Route::get('/clients/{id}', function ($id) {
+    return response()->json(\App\client::find($id), 200);
 });
 
 Route::get('/clients', function () {
