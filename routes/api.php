@@ -1,6 +1,6 @@
 <?php
 
-//use App\Http\Resources\PostResource;
+
 use Illuminate\Http\Request;
 
 /*
@@ -18,147 +18,39 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //Главная
-Route::get('/', function () {
-    return response()->json(['welcome'=>['Welcome to the test case! '], 'current time'=>date('Y-m-d h:m:s')], 200);
-    });
+Route::get('/', '\\' . \App\Http\Controllers\index_controller::class)->name('index');
 
-//Создание клиента
-Route::post('/clients', function (Request $request) {
-    $rules = [
-        'first_name' => 'required|max:35|min:2',
-        'last_name' => 'required|max:35|min:2',
-        'email' => 'required|max:35|min:3| email| unique:clients,email',
-        'password' => 'required|max:36|min:3',
-    ];
-    /** @var \Illuminate\Support\Facades\Validator */
-    $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules);
+  //Создание клиента
+Route::post('/clients', '\\' . \App\Http\Controllers\Create_client_controller::class)->name('create_client');
 
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 400);
-    }
-    $client = new \App\client();
-    $client->first_name = $request->post('first_name');
-    $client->last_name = $request->post('last_name');
-    $client->email = $request->post('email');
-    $client->password = $request->post('password');
-    $client->save();
-    return response()->json($client, 201);
-});
 
 //Получение клиента
-Route::get('/clients/{id}', function ($id) {
-    return response()->json(\App\client::find($id), 200);
-});
+Route::get('/clients/{id}', '\\' . \App\Http\Controllers\Get_client_controller::class)->name('get_client');
 
 //Получение всех клиентов
-Route::get('/clients', function () {
-    return response()->json(\App\client::all(), 200);
-    });
+Route::get('/clients', '\\' . \App\Http\Controllers\Get_clients_controller::class)->name('get_clients');
+
 
 //Удаление клиента
-Route::delete('/clients/{id}', function (Request $request, $id) {
-    try {
-        $client = \App\client::findOrFail($id);
-    } catch (\Exception $exception) {
-        return response()->json(null, 404);
-    }
-    $client->delete();
-    return response()->json(null, 204);
-});
+Route::delete('/clients/{id}', '\\' . \App\Http\Controllers\Delete_client_controller::class)->name('delete_clients');
 
 
 //Обновление клиента
-Route::put('/clients/{id}', function (Request $request, $id) {
-    try {
-        $client = \App\client::findOrFail($id);
-    } catch (\Exception $exception) {
-        return response()->json(null, 404);
-    }
-    $rules = [
-        'first_name' => 'required|max:35|min:2',
-        'last_name' => 'required|max:35|min:2',
-        'email' => 'required|max:35|min:3| email| unique:clients,email',
-        'password' => 'required|max:36|min:3',
-    ];
-    /** @var \Illuminate\Support\Facades\Validator */
-    $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules);
-
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 400);
-    }
-    $client = new \App\client();
-    $client->first_name = $request->post('first_name');
-    $client->last_name = $request->post('last_name');
-    $client->email = $request->post('email');
-    $client->password = $request->post('password');
-    $client->save();
-    return response()->json($client, 201);
-});
+Route::put('/clients/{id}', '\\' . \App\Http\Controllers\Update_client_controller::class)->name('update_clients');
 
 //Создание проекта
-Route::post('/projects', function (Request $request) {
-    $rules = [
-        'name' => 'required|max:150|min:2',
-        'description' => 'required|max:35|min:2',
-        'statuses' => 'required', \Illuminate\Validation\Rule::in( ['planned', 'running', 'on hold', 'finished', 'cancel']),
-    ];
-    /** @var \Illuminate\Support\Facades\Validator */
-    $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules);
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 400);
-    }
-    $project = new \App\project();
-    $project->name = $request->post('name');
-    $project->description = $request->post('description');
-    $project->statuses = $request->post('statuses');
-    $project->save();
-    return response()->json($project, 201);
-});
+Route::post('/projects', '\\' . \App\Http\Controllers\Create_project_controller::class)->name('create_project');
 
 //Получение проекта
-Route::get('/projects/{id}', function ($id) {
-    return response()->json(\App\project::find($id), 200);
-});
+Route::get('/projects/{id}', '\\' . \App\Http\Controllers\Get_project_controller::class)->name('get_project');
 
 //Получение всех проектов
-Route::get('/projects', function () {
-    return response()->json(\App\project::all(), 200);
-});
+Route::get('/projects', '\\' . \App\Http\Controllers\Get_projects_controller::class)->name('get_projects');
 
 //Удаление проекта
-Route::delete('/projects/{id}', function (Request $request, $id) {
-    try {
-        $project = \App\project::findOrFail($id);
-    } catch (\Exception $exception) {
-        return response()->json(null, 404);
-    }
-    $project->delete();
-    return response()->json(null, 204);
-});
+Route::delete('/projects/{id}', '\\' . \App\Http\Controllers\Delete_project_controller::class)->name('delete_projects');
 
 
 //Обновление проекта
-Route::put('/projects/{id}', function (Request $request, $id) {
-    try {
-        $project = \App\project::findOrFail($id);
-    } catch (\Exception $exception) {
-        return response()->json(null, 404);
-    }
-    $rules = [
-        'name' => 'required|max:150|min:2',
-        'description' => 'required|max:255|min:2',
-        'statuses' => 'required', \Illuminate\Validation\Rule::in( ['planned', 'running', 'on hold', 'finished', 'cancel']),
-    ];
-    /** @var \Illuminate\Support\Facades\Validator */
-    $validator = \Illuminate\Support\Facades\Validator::make($request->all(), $rules);
+Route::put('/projects/{id}', '\\' . \App\Http\Controllers\Update_project_controller::class)->name('update_projects');
 
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 400);
-    }
-    $project = new \App\project();
-    $project->name = $request->post('name');
-    $project->description = $request->post('description');
-    $project->statuses = $request->post('statuses');
-    $project->save();
-    return response()->json($project, 201);
-});
